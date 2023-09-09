@@ -2,6 +2,7 @@ package com.giftforzhangjun;
 
 import com.giftforzhangjun.tableModel.BiologicalDirectory;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -111,10 +112,10 @@ public class Link {
     
     
     /**
-     * @Description:  新增【生物名录表】的数据库操作
+     * @param biologicalDirectory:
+     * @Description: 新增【生物名录表】的数据库操作
      * @Author: 冲动火龙果
      * @Date: 2023/9/9 22:28
-     * @param biologicalDirectory:
      * @return: boolean
      **/
     public static boolean saveBiologicalDirectory(BiologicalDirectory biologicalDirectory) throws Exception {
@@ -137,7 +138,7 @@ public class Link {
         
         // 数据插入的sql
         String sqlStr = "INSERT INTO biological_directory (Kingdom_cn, Kingdom_latin, Phylum_cn, Phylum_latin, Class_cn, Class_latin, Order_cn, Order_latin, Family_cn, Family_latin, Genus_cn, Genus_latin, Species_cn, Species_latin, auditor, directory_version) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        return exeUpdate(sqlStr, kingdomCn,kingdomLatin,phylumCn,phylumLatin,classCn,classLatin,orderCn,orderLatin,familyCn,familyLatin,genusCn,genusLatin,speciesCn,speciesLatin,auditor,directoryVersion);
+        return exeUpdate(sqlStr, kingdomCn, kingdomLatin, phylumCn, phylumLatin, classCn, classLatin, orderCn, orderLatin, familyCn, familyLatin, genusCn, genusLatin, speciesCn, speciesLatin, auditor, directoryVersion);
     }
     
     
@@ -276,7 +277,107 @@ public class Link {
     
     //--------------------------------------------------------------------
 //   学生类初始化--管理员
-    public static void magstudent(List<BiologicalDirectory> list) throws Exception {
+    public static void getResultInfo(List<BiologicalDirectory> resultList, BiologicalDirectory biologicalDirectory4Query) throws Exception {
+        String subSqlStr = "";
+        // 动态拼接查询条件
+        if (biologicalDirectory4Query != null) {
+            String kingdomCn = biologicalDirectory4Query.getKingdomCn().trim();
+            if (StringUtils.isNotBlank(kingdomCn)) {
+                subSqlStr += " and kingdom_cn ='" + kingdomCn + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String kingdomLatin = biologicalDirectory4Query.getKingdomLatin().trim();
+            if (StringUtils.isNotBlank(kingdomLatin)) {
+                subSqlStr += " and kingdom_latin ='" + kingdomLatin + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String phylumCn = biologicalDirectory4Query.getPhylumCn().trim();
+            if (StringUtils.isNotBlank(phylumCn)) {
+                subSqlStr += " and phylum_cn ='" + phylumCn + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String phylumLatin = biologicalDirectory4Query.getPhylumLatin().trim();
+            if (StringUtils.isNotBlank(phylumLatin)) {
+                subSqlStr += " and phylum_latin ='" + phylumLatin + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String classCn = biologicalDirectory4Query.getClassCn().trim();
+            if (StringUtils.isNotBlank(classCn)) {
+                subSqlStr += " and class_cn ='" + classCn + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String classLatin = biologicalDirectory4Query.getClassLatin().trim();
+            if (StringUtils.isNotBlank(classLatin)) {
+                subSqlStr += " and class_latin ='" + classLatin + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String orderCn = biologicalDirectory4Query.getOrderCn().trim();
+            if (StringUtils.isNotBlank(orderCn)) {
+                subSqlStr += " and order_cn ='" + orderCn + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String orderLatin = biologicalDirectory4Query.getOrderLatin().trim();
+            if (StringUtils.isNotBlank(orderLatin)) {
+                subSqlStr += " and order_latin ='" + orderLatin + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String familyCn = biologicalDirectory4Query.getFamilyCn().trim();
+            if (StringUtils.isNotBlank(familyCn)) {
+                subSqlStr += " and family_cn ='" + familyCn + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String familyLatin = biologicalDirectory4Query.getFamilyLatin().trim();
+            if (StringUtils.isNotBlank(familyLatin)) {
+                subSqlStr += " and family_latin ='" + familyLatin + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String genusCn = biologicalDirectory4Query.getGenusCn().trim();
+            if (StringUtils.isNotBlank(genusCn)) {
+                subSqlStr += " and genus_cn ='" + genusCn + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String genusLatin = biologicalDirectory4Query.getGenusLatin().trim();
+            if (StringUtils.isNotBlank(genusLatin)) {
+                subSqlStr += " and genus_latin ='" + genusLatin + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String speciesCn = biologicalDirectory4Query.getSpeciesCn().trim();
+            if (StringUtils.isNotBlank(speciesCn)) {
+                subSqlStr += " and species_cn ='" + speciesCn + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String speciesLatin = biologicalDirectory4Query.getSpeciesLatin().trim();
+            if (StringUtils.isNotBlank(speciesLatin)) {
+                subSqlStr += " and species_latin ='" + speciesLatin + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String auditor = biologicalDirectory4Query.getAuditor().trim();
+            if (StringUtils.isNotBlank(auditor)) {
+                subSqlStr += " and auditor ='" + auditor + "' ";
+            }
+        }
+        if (biologicalDirectory4Query != null) {
+            String directoryVersion = biologicalDirectory4Query.getDirectoryVersion().trim();
+            if (StringUtils.isNotBlank(directoryVersion)) {
+                subSqlStr += " and directory_version ='" + directoryVersion + "' ";
+            }
+        }
+        
+        
         String sqlStr = "select pk,\n" +
                 "       Kingdom_cn,\n" +
                 "       Kingdom_latin,\n" +
@@ -294,7 +395,7 @@ public class Link {
                 "       Species_latin,\n" +
                 "       auditor,\n" +
                 "       directory_version\n" +
-                "from biological_directory where 1=1 ";
+                "from biological_directory where 1=1 " + subSqlStr;
         
         PreparedStatement pstmt = getConn().prepareStatement(sqlStr);
         ResultSet rs = pstmt.executeQuery();
@@ -337,9 +438,8 @@ public class Link {
             biologicalDirectory.setAuditor(auditor);
             biologicalDirectory.setDirectoryVersion(directoryVersion);
             
-            list.add(biologicalDirectory);
+            resultList.add(biologicalDirectory);
         }
-
         
         // 释放资源
         rs.close();

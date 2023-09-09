@@ -108,11 +108,11 @@ public class ZhangJunMain extends Application {
         
         // 页面展示后进行一次默认的查询操作
         List<BiologicalDirectory> biologicalDirectoryList = new ArrayList<>();
-        queryFucntion(bp, biologicalDirectoryList);
+        queryFucntion(bp, biologicalDirectoryList,null);
         
     }
     
-    static void queryFucntion(BorderPane bp, List<BiologicalDirectory> biologicalDirectoryList) {
+    static void queryFucntion(BorderPane bp, List<BiologicalDirectory> biologicalDirectoryList,BiologicalDirectory biologicalDirectory) {
         //  定义表格对象
         TableView<BiologicalDirectory> tv = new TableView();
         
@@ -223,10 +223,11 @@ public class ZhangJunMain extends Application {
         
         try {
             // 将查询的结果封装到list中
-            Link.magstudent(biologicalDirectoryList);
+            Link.getResultInfo(biologicalDirectoryList,biologicalDirectory);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        // 将结果集添加到页面的表中
         tv.getItems().addAll(biologicalDirectoryList);
         bp.setCenter(tv);
     }
