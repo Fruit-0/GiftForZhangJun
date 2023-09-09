@@ -1,5 +1,6 @@
 package com.giftforzhangjun;
 
+import com.giftforzhangjun.tableModel.BiologicalDirectory;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ZhangJunMain extends Application {
     private static Stage stage;
@@ -32,125 +34,207 @@ public class ZhangJunMain extends Application {
         ZhangJunMain.stage = stage;
         // 设置窗口不可调
         stage.setResizable(false);
-        deng();
+        normalStage();
         stage.show();
     }
     
     
-    //    ---------------------------------------------------------------------
-//      教师登录后界面-----管理学生
-    public static void deng() {
+    /**
+     * @Description: 最基础的查询主页面
+     * @Author: 冲动火龙果
+     * @Date: 2023/9/9 22:54
+     * @return: void
+     **/
+    public static void normalStage() {
+        // 基本属性设置-----------START
         BorderPane bp = new BorderPane();
-        stage.setTitle("学校管理系统");
-        Scene sc = new Scene(bp, 870, 500);
+        stage.setTitle("张俊是个好同志");
+        Scene sc = new Scene(bp, 1500, 800);
         stage.setScene(sc);
         stage.show();
+        // 基本属性设置-----------END
+        
+        //  查询条件框
         FlowPane fp1 = new FlowPane();
-        Label l1 = new Label("姓名");
-        TextField f1 = new TextField();
-        Label l2 = new Label("班级");
-        TextField f2 = new TextField();
-        Button b1 = new Button("查询");
-        Button b2 = new Button("增加");
-        Button b3 = new Button("删除");
-        Button b4 = new Button("修改");
-        b1.setOnAction(a -> {
-            
-            if (!f1.getText().trim().equals("") && f2.getText().trim().equals("")) {   // 姓名
-                ArrayList<Student> students = new ArrayList<>();
-                refer(f1.getText(), 1);
-            } else if (f1.getText().trim().equals("") && !f2.getText().trim().equals("")) {  // 班级
-                ArrayList<Student> students = new ArrayList<>();
-                refer(f2.getText(), 2);
-            } else if (!f1.getText().trim().equals("") && !f2.getText().trim().equals("")) {  // 姓名+班级
-                ArrayList<Student> students = new ArrayList<>();
-                refer1(f1.getText(), f2.getText());
-            }
-        });
-        b2.setOnAction(a -> {
-            increase(bp, stage);
-        });
-        b3.setOnAction(a -> {
-            delete(bp, stage);
-        });
-        b4.setOnAction(a -> {
-            amend(bp, stage);
-        });
-        fp1.getChildren().addAll(l1, f1, l2, f2, b1, b2, b3, b4);
+        Label name = new Label("姓名");
+        TextField nameValue = new TextField();
+        Label className = new Label("班级");
+        TextField classNameValue = new TextField();
+        fp1.getChildren().addAll(name, nameValue, className, classNameValue);
         fp1.setHgap(15);
         fp1.setPadding(new Insets(20));
-        bp.setTop(fp1);
-        // 学生成绩表格
-        ArrayList<Student> students = new ArrayList<>();
-        maginit(bp, students);
+        
+        // 操作功能框
+        FlowPane fp2 = new FlowPane();
+        Button queryButton = new Button("查询");
+        Button addButton = new Button("增加");
+        Button deleteButton = new Button("删除");
+        Button alterButton = new Button("修改");
+        fp2.getChildren().addAll(queryButton, addButton, deleteButton, alterButton);
+        fp2.setHgap(15);
+        fp2.setPadding(new Insets(20));
+        
+        //  整合查询条件框和操作功能框
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(fp1, fp2);
+        
+        // 注册【查询】按钮的功能
+        queryButton.setOnAction(a -> {
+            if (!nameValue.getText().trim().equals("") && classNameValue.getText().trim().equals("")) {   // 姓名
+                refer(nameValue.getText(), 1);
+            } else if (nameValue.getText().trim().equals("") && !classNameValue.getText().trim().equals("")) {  // 班级
+                refer(classNameValue.getText(), 2);
+            } else if (!nameValue.getText().trim().equals("") && !classNameValue.getText().trim().equals("")) {  // 姓名+班级
+                refer1(nameValue.getText(), classNameValue.getText());
+            }
+        });
+        
+        // 注册【添加】按钮的功能
+        addButton.setOnAction(a -> {
+            insertFunction(bp, stage);
+        });
+        
+        // 注册【删除】按钮的功能
+        deleteButton.setOnAction(a -> {
+            deleteFunction(bp, stage);
+        });
+        
+        // 注册【修改】按钮的功能
+        alterButton.setOnAction(a -> {
+            alterFunction(bp, stage);
+        });
+        
+        bp.setTop(vBox);
+        
+        // 页面展示后进行一次默认的查询操作
+        List<BiologicalDirectory> biologicalDirectoryList = new ArrayList<>();
+        queryFucntion(bp, biologicalDirectoryList);
         
     }
     
-    //-------------------------------------------------------------------------
-//    学生成绩表格
-    static void maginit(BorderPane bp, ArrayList<Student> students) {
-        TableView<Student> tv = new TableView();
-        // 定义表格的行标
-        TableColumn ID = new TableColumn("学号");
-        TableColumn number = new TableColumn("班级");
-        TableColumn name = new TableColumn("姓名");
-        TableColumn sex = new TableColumn("性别");
-        TableColumn code = new TableColumn("密码");
-        TableColumn chinese = new TableColumn("语文");
-        TableColumn mathematics = new TableColumn("数学");
-        TableColumn english = new TableColumn("英语");
-        TableColumn chemistry = new TableColumn("化学");
-        TableColumn history = new TableColumn("历史");
-        TableColumn compellation = new TableColumn("班主任");
-        TableColumn peace = new TableColumn("总分");
-        // 表格列宽宽度设置
-        ID.setMinWidth(65);
-        name.setMinWidth(72);
-        number.setMinWidth(75);
-        sex.setMinWidth(65);
-        code.setMinWidth(74);
-        chinese.setMinWidth(75);
-        mathematics.setMinWidth(75);
-        english.setMinWidth(75);
-        chemistry.setMinWidth(75);
-        history.setMinWidth(75);
-        peace.setMinWidth(70);
-        compellation.setMinWidth(70);
+    static void queryFucntion(BorderPane bp, List<BiologicalDirectory> biologicalDirectoryList) {
+        //  定义表格对象
+        TableView<BiologicalDirectory> tv = new TableView();
         
-        // 确定数据导入的列
-        ID.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
-        number.setCellValueFactory(
-                new PropertyValueFactory<>("number"));
-        name.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
-        sex.setCellValueFactory(
-                new PropertyValueFactory<>("sex"));
-        code.setCellValueFactory(
-                new PropertyValueFactory<>("code"));
-        chinese.setCellValueFactory(
-                new PropertyValueFactory<>("chinese"));
-        mathematics.setCellValueFactory(
-                new PropertyValueFactory<>("mathematics"));
-        english.setCellValueFactory(
-                new PropertyValueFactory<>("english"));
-        chemistry.setCellValueFactory(
-                new PropertyValueFactory<>("chemistry"));
-        history.setCellValueFactory(
-                new PropertyValueFactory<>("history"));
-        peace.setCellValueFactory(
-                new PropertyValueFactory<>("peace"));
-        compellation.setCellValueFactory(
-                new PropertyValueFactory<>("compellation"));
-        tv.getColumns().addAll(ID, number, name, sex, code, chinese, mathematics, english, chemistry, history, peace, compellation);
+        // 定义表格的列
+        TableColumn pkTc = new TableColumn("主键");
+        // 表格列宽宽度设置
+        pkTc.setMinWidth(50);
+        // 设置列的内容水平居中
+        pkTc.setCellValueFactory(new PropertyValueFactory<>("pk"));
+        pkTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(pkTc);
+        
+        TableColumn kingdomCnTc = new TableColumn("界_中文名");
+        kingdomCnTc.setMinWidth(50);
+        kingdomCnTc.setCellValueFactory(new PropertyValueFactory<>("kingdomCn"));
+        kingdomCnTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(kingdomCnTc);
+        
+        TableColumn kingdomLatinTc = new TableColumn("界_拉丁名");
+        kingdomLatinTc.setMinWidth(50);
+        kingdomLatinTc.setCellValueFactory(new PropertyValueFactory<>("kingdomLatin"));
+        kingdomLatinTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(kingdomLatinTc);
+        
+        TableColumn phylumCnTc = new TableColumn("门_中文名");
+        phylumCnTc.setMinWidth(50);
+        phylumCnTc.setCellValueFactory(new PropertyValueFactory<>("phylumCn"));
+        phylumCnTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(phylumCnTc);
+        
+        TableColumn phylumLatinTc = new TableColumn("门_拉丁名");
+        phylumLatinTc.setMinWidth(50);
+        phylumLatinTc.setCellValueFactory(new PropertyValueFactory<>("phylumLatin"));
+        phylumLatinTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(phylumLatinTc);
+        
+        TableColumn classCnTc = new TableColumn("纲_中文名");
+        classCnTc.setMinWidth(50);
+        classCnTc.setCellValueFactory(new PropertyValueFactory<>("classCn"));
+        classCnTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(classCnTc);
+        
+        TableColumn classLatinTc = new TableColumn("纲_拉丁名");
+        classLatinTc.setMinWidth(50);
+        classLatinTc.setCellValueFactory(new PropertyValueFactory<>("classLatin"));
+        classLatinTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(classLatinTc);
+        
+        TableColumn orderCnTc = new TableColumn("目_中文名");
+        orderCnTc.setMinWidth(50);
+        orderCnTc.setCellValueFactory(new PropertyValueFactory<>("orderCn"));
+        orderCnTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(orderCnTc);
+        
+        TableColumn orderLatinTc = new TableColumn("目_拉丁名");
+        orderLatinTc.setMinWidth(50);
+        orderLatinTc.setCellValueFactory(new PropertyValueFactory<>("orderLatin"));
+        orderLatinTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(orderLatinTc);
+        
+        TableColumn familyCnTc = new TableColumn("科_中文名");
+        familyCnTc.setMinWidth(50);
+        familyCnTc.setCellValueFactory(new PropertyValueFactory<>("familyCn"));
+        familyCnTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(familyCnTc);
+        
+        TableColumn familyLatinTc = new TableColumn("科_拉丁名");
+        familyLatinTc.setMinWidth(50);
+        familyLatinTc.setCellValueFactory(new PropertyValueFactory<>("familyLatin"));
+        familyLatinTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(familyLatinTc);
+        
+        TableColumn genusCnTc = new TableColumn("属_中文名");
+        genusCnTc.setMinWidth(50);
+        genusCnTc.setCellValueFactory(new PropertyValueFactory<>("genusCn"));
+        genusCnTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(genusCnTc);
+        
+        TableColumn genusLatinTc = new TableColumn("属_拉丁名");
+        genusLatinTc.setMinWidth(50);
+        genusLatinTc.setCellValueFactory(new PropertyValueFactory<>("genusLatin"));
+        genusLatinTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(genusLatinTc);
+        
+        TableColumn speciesCnTc = new TableColumn("种_中文名");
+        speciesCnTc.setMinWidth(50);
+        speciesCnTc.setCellValueFactory(new PropertyValueFactory<>("speciesCn"));
+        speciesCnTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(speciesCnTc);
+        
+        TableColumn speciesLatinTc = new TableColumn("种_拉丁名");
+        speciesLatinTc.setMinWidth(50);
+        speciesLatinTc.setCellValueFactory(new PropertyValueFactory<>("speciesLatin"));
+        speciesLatinTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(speciesLatinTc);
+        
+        TableColumn auditorTc = new TableColumn("审核人");
+        auditorTc.setMinWidth(50);
+        auditorTc.setCellValueFactory(new PropertyValueFactory<>("auditor"));
+        auditorTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(auditorTc);
+        
+        TableColumn directoryVersionTc = new TableColumn("名录版本");
+        directoryVersionTc.setMinWidth(50);
+        directoryVersionTc.setCellValueFactory(new PropertyValueFactory<>("directoryVersion"));
+        directoryVersionTc.setStyle("-fx-alignment: CENTER;");
+        tv.getColumns().addAll(directoryVersionTc);
+        
         try {
-            Link.magstudent(students);
+            // 将查询的结果封装到list中
+            Link.magstudent(biologicalDirectoryList);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        tv.getItems().addAll(students);
+        tv.getItems().addAll(biologicalDirectoryList);
         bp.setCenter(tv);
     }
+    
+    
+    //-------------------------------------------------------------------------
+//    学生成绩表格
+    
     
     //    --------------------------------------------------------------------
     //    名字模糊<<<<查询>>>>>表格--------------教师---查询学生----班级或姓名
@@ -180,7 +264,7 @@ public class ZhangJunMain extends Application {
             }
         });
         b2.setOnAction(a -> {
-            deng();
+            normalStage();
         });
         fp1.getChildren().addAll(l1, f1, l2, f2, b1, b2);
         fp1.setHgap(15);
@@ -216,7 +300,7 @@ public class ZhangJunMain extends Application {
             }
         });
         b2.setOnAction(a -> {
-            deng();
+            normalStage();
         });
         fp1.getChildren().addAll(l1, f1, l2, f2, b1, b2);
         fp1.setHgap(15);
@@ -425,79 +509,182 @@ public class ZhangJunMain extends Application {
         bp.setCenter(tv);
     }
     
-    //        ------------------------------------------------------------------
-//        学生增加界面
-    public static void increase(BorderPane bp, Stage stage) {
+    /**
+     * @param bp:
+     * @param stage:
+     * @Description: 新增【生物名录表】
+     * @Author: 冲动火龙果
+     * @Date: 2023/9/9 21:43
+     * @return: void
+     **/
+    public static void insertFunction(BorderPane bp, Stage stage) {
+        stage.setTitle("新增生物名录");
+        
+        //  新增【生物名录表】页面的一些 基础属性设置
         GridPane gp = new GridPane();
-        stage.setTitle("学校管理系统");
+        gp.setStyle("-fx-font-family: 'FangSong';-fx-font-size: 15;");
         // 设置居中方式
         gp.setAlignment(Pos.CENTER);
-        Stage stage1 = new Stage();
         // 调整空隙
         gp.setHgap(10);
         gp.setVgap(10);
-        // 新建文本标签
-        Label l1 = new Label("ID");
-        // 新建文本标
-        Label l3 = new Label("姓名");
-        // 新建文本标签
-        Label l4 = new Label("性别");
-        // 新建文本标签
-        Label l5 = new Label("密码");
-        // 新建输入框
-        TextField f1 = new TextField();
-        // 新建输入框
-        TextField f3 = new TextField();
-        // 新建输入框
-        TextField f4 = new TextField();
-        // 新建输入框
-        TextField f5 = new TextField();
-        gp.add(l1, 0, 1);
-        gp.add(f1, 1, 1);
-        gp.add(l3, 0, 2);
-        gp.add(f3, 1, 2);
-        gp.add(l4, 0, 3);
-        gp.add(f4, 1, 3);
-        gp.add(l5, 0, 4);
-        gp.add(f5, 1, 4);
-        Button b1 = new Button("确定");
-        b1.setOnAction(a -> {
-            if (!f3.getText().trim().equals("") && !f5.getText().trim().equals("") && !f4.getText().trim().equals("") && !f1.getText().trim().equals("")) {
-                if (f4.getText().equals("男") || f4.getText().equals("女")) {
-                    try {
-                        Link.rigister(f3.getText(), f5.getText(), f4.getText(), f1.getText());
-                        ArrayList<Student> students = new ArrayList<>();
-//                        maginit(bp, students);
-                        deng();
-                        tips("添加成功", stage1);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                } else {
-                    tips("性别不合规", stage1);
-                }
-                
-            } else {
-                tips("请填写完整", stage1);
-            }
-            
-        });
-        gp.add(b1, 1, 7);
-        gp.setStyle("-fx-font-family: 'FangSong';-fx-font-size: 15;");
-        Scene sc = new Scene(gp, 300, 300);
         
+        
+        //  字段列表
+        Label kingdomCn = new Label("界_中文名");
+        TextField kingdomCnValue = new TextField();
+        // 元素，列号，行号
+        gp.add(kingdomCn, 0, 1);
+        gp.add(kingdomCnValue, 1, 1);
+        
+        Label kingdomLatin = new Label("界_拉丁名");
+        TextField kingdomLatinValue = new TextField();
+        // 元素，列号，行号
+        gp.add(kingdomLatin, 0, 2);
+        gp.add(kingdomLatinValue, 1, 2);
+        
+        Label phylumCn = new Label("门_中文名");
+        TextField phylumCnValue = new TextField();
+        // 元素，列号，行号
+        gp.add(phylumCn, 0, 3);
+        gp.add(phylumCnValue, 1, 3);
+        
+        Label phylumLatin = new Label("门_拉丁名");
+        TextField phylumLatinValue = new TextField();
+        // 元素，列号，行号
+        gp.add(phylumLatin, 0, 4);
+        gp.add(phylumLatinValue, 1, 4);
+        
+        Label classCn = new Label("纲_中文名");
+        TextField classCnValue = new TextField();
+        // 元素，列号，行号
+        gp.add(classCn, 0, 5);
+        gp.add(classCnValue, 1, 5);
+        
+        Label classLatin = new Label("纲_拉丁名");
+        TextField classLatinValue = new TextField();
+        // 元素，列号，行号
+        gp.add(classLatin, 0, 6);
+        gp.add(classLatinValue, 1, 6);
+        
+        Label OrderCn = new Label("目_中文名");
+        TextField orderCnValue = new TextField();
+        // 元素，列号，行号
+        gp.add(OrderCn, 0, 7);
+        gp.add(orderCnValue, 1, 7);
+        
+        Label orderLatin = new Label("目_拉丁名");
+        TextField orderLatinValue = new TextField();
+        // 元素，列号，行号
+        gp.add(orderLatin, 0, 8);
+        gp.add(orderLatinValue, 1, 8);
+        
+        Label familyCn = new Label("科_中文名");
+        TextField familyCnValue = new TextField();
+        // 元素，列号，行号
+        gp.add(familyCn, 0, 9);
+        gp.add(familyCnValue, 1, 9);
+        
+        Label familyLatin = new Label("科_拉丁名");
+        TextField familyLatinValue = new TextField();
+        // 元素，列号，行号
+        gp.add(familyLatin, 0, 10);
+        gp.add(familyLatinValue, 1, 10);
+        
+        Label genusCn = new Label("属_中文名");
+        TextField genusCnValue = new TextField();
+        // 元素，列号，行号
+        gp.add(genusCn, 0, 11);
+        gp.add(genusCnValue, 1, 11);
+        
+        Label genusLatin = new Label("属_拉丁名");
+        TextField genusLatinValue = new TextField();
+        // 元素，列号，行号
+        gp.add(genusLatin, 0, 12);
+        gp.add(genusLatinValue, 1, 12);
+        
+        Label speciesCn = new Label("种_中文名");
+        TextField speciesCnValue = new TextField();
+        // 元素，列号，行号
+        gp.add(speciesCn, 0, 13);
+        gp.add(speciesCnValue, 1, 13);
+        
+        Label speciesLatin = new Label("种_拉丁名");
+        TextField speciesLatinValue = new TextField();
+        // 元素，列号，行号
+        gp.add(speciesLatin, 0, 14);
+        gp.add(speciesLatinValue, 1, 14);
+        
+        Label auditor = new Label("审核人");
+        TextField auditorValue = new TextField();
+        // 元素，列号，行号
+        gp.add(auditor, 0, 15);
+        gp.add(auditorValue, 1, 15);
+        
+        Label directoryVersion = new Label("名录版本");
+        TextField directoryVersionValue = new TextField();
+        // 元素，列号，行号
+        gp.add(directoryVersion, 0, 16);
+        gp.add(directoryVersionValue, 1, 16);
+        
+        // 新增保存按钮
+        Button saveButton = new Button("保存");
+        gp.add(saveButton, 1, 17);
+        
+        // 蒙版舞台
+        Stage saveBiologicalDirectoryStage = new Stage();
+        saveBiologicalDirectoryStage.setTitle("新增生物名录");
+        // 给保存按钮注册时间
+        saveButton.setOnAction(a -> {
+            try {
+                // 新建生物名录对象用于保存数据
+                BiologicalDirectory biologicalDirectory = new BiologicalDirectory();
+                biologicalDirectory.setKingdomCn(kingdomCnValue.getText());
+                biologicalDirectory.setKingdomLatin(kingdomLatinValue.getText());
+                biologicalDirectory.setPhylumCn(phylumCnValue.getText());
+                biologicalDirectory.setPhylumLatin(phylumLatinValue.getText());
+                biologicalDirectory.setClassCn(classCnValue.getText());
+                biologicalDirectory.setClassLatin(classLatinValue.getText());
+                biologicalDirectory.setOrderCn(orderCnValue.getText());
+                biologicalDirectory.setOrderLatin(orderLatinValue.getText());
+                biologicalDirectory.setFamilyCn(familyCnValue.getText());
+                biologicalDirectory.setFamilyLatin(familyLatinValue.getText());
+                biologicalDirectory.setGenusCn(genusCnValue.getText());
+                biologicalDirectory.setGenusLatin(genusLatinValue.getText());
+                biologicalDirectory.setSpeciesCn(speciesCnValue.getText());
+                biologicalDirectory.setSpeciesLatin(speciesLatinValue.getText());
+                biologicalDirectory.setAuditor(auditorValue.getText());
+                biologicalDirectory.setDirectoryVersion(directoryVersionValue.getText());
+                
+                boolean addFlag = Link.saveBiologicalDirectory(biologicalDirectory);
+                String addMessage = addFlag ? "添加成功" : "添加失败";
+                
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("提示");
+                alert.setHeaderText(null);
+                alert.setContentText(addMessage);
+                // 显示提示框
+                alert.showAndWait();
+                saveBiologicalDirectoryStage.close();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+        
+        //  对保存弹窗的一些属性设置
+        Scene sc = new Scene(gp, 300, 650);
         // 只能操作该窗口
-        stage1.initOwner(stage);
-        stage1.initModality(Modality.WINDOW_MODAL);
+        saveBiologicalDirectoryStage.initOwner(stage);
+        saveBiologicalDirectoryStage.initModality(Modality.WINDOW_MODAL);
         // 设置窗口不可调
-        stage1.setResizable(false);
-        stage1.setScene(sc);
-        stage1.show();
+        saveBiologicalDirectoryStage.setResizable(false);
+        saveBiologicalDirectoryStage.setScene(sc);
+        saveBiologicalDirectoryStage.show();
     }
     
     //    ----------------------------------------------------------------------
 //    学生删除界面
-    static void delete(BorderPane bp, Stage stage) {
+    static void deleteFunction(BorderPane bp, Stage stage) {
 //        anum++;
         GridPane gp = new GridPane();
 //        设置间距
@@ -512,22 +699,20 @@ public class ZhangJunMain extends Application {
         TextField t0 = new TextField();
         
         b1.setOnAction(actionEvent -> {
-//            if (number == 0) {
-            try {
-                if (t0.getText().trim().equals("")) {
-                    tips("删除失败", stage1);
-                } else {
-                    if (Link.delete(Integer.valueOf(t0.getText()))) {
-                        tips("删除成功", stage1);
-                        ArrayList<Student> students = new ArrayList<>();
-                        maginit(bp, students);
-                    }
-                    
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-//            }
+            // try {
+            //     if (t0.getText().trim().equals("")) {
+            //         tips("删除失败", stage1);
+            //     } else {
+            //         if (Link.delete(Integer.valueOf(t0.getText()))) {
+            //             tips("删除成功", stage1);
+            //             ArrayList<Student> students = new ArrayList<>();
+            //             queryFucntion(bp, students);
+            //         }
+            //
+            //     }
+            // } catch (Exception e) {
+            //     e.printStackTrace();
+            // }
         });
 
 //        添加到面板中
@@ -554,7 +739,7 @@ public class ZhangJunMain extends Application {
     
     //    -----------------------------------------------------------------------
 //    学生修改界面
-    public static void amend(BorderPane bp, Stage stage) {
+    public static void alterFunction(BorderPane bp, Stage stage) {
         
         GridPane gp = new GridPane();
         Stage stage1 = new Stage();
@@ -688,7 +873,7 @@ public class ZhangJunMain extends Application {
                 Link.revamp3(f1.getText(), f3.getText(), f4.getText(), f5.getText());
                 Link.revamp4(f1.getText(), f6.getText(), f7.getText(), f8.getText(), f9.getText(), f10.getText(), f2.getText());
 //                maginit(bp,students);
-                deng();
+                normalStage();
                 tips("修改成功", stage2);
             } else {
                 tips("性别不合规", stage2);

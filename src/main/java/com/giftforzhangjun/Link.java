@@ -1,16 +1,18 @@
 package com.giftforzhangjun;
 
+import com.giftforzhangjun.tableModel.BiologicalDirectory;
 import javafx.stage.Stage;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Link {
     /**
      * URL地址
      */
-    private static final String URL = "jdbc:mysql://192.168.56.10:3306/guanlixitong?useSSL=false";
+    private static final String URL = "jdbc:mysql://192.168.56.10:3306/zhangjun_datebase?useSSL=false";
     /**
      * 登录数据库服务器的账号
      */
@@ -19,7 +21,7 @@ public class Link {
      * 登录数据库服务器的密码
      */
     private static final String PASSWORD = "123456";
-
+    
     
     /**
      * 返回数据库连接对象
@@ -106,6 +108,38 @@ public class Link {
             return false;
         }
     }
+    
+    
+    /**
+     * @Description:  新增【生物名录表】的数据库操作
+     * @Author: 冲动火龙果
+     * @Date: 2023/9/9 22:28
+     * @param biologicalDirectory:
+     * @return: boolean
+     **/
+    public static boolean saveBiologicalDirectory(BiologicalDirectory biologicalDirectory) throws Exception {
+        String kingdomCn = biologicalDirectory.getKingdomCn();
+        String kingdomLatin = biologicalDirectory.getKingdomLatin();
+        String phylumCn = biologicalDirectory.getPhylumCn();
+        String phylumLatin = biologicalDirectory.getPhylumLatin();
+        String classCn = biologicalDirectory.getClassCn();
+        String classLatin = biologicalDirectory.getClassLatin();
+        String orderCn = biologicalDirectory.getOrderCn();
+        String orderLatin = biologicalDirectory.getOrderLatin();
+        String familyCn = biologicalDirectory.getFamilyCn();
+        String familyLatin = biologicalDirectory.getFamilyLatin();
+        String genusCn = biologicalDirectory.getGenusCn();
+        String genusLatin = biologicalDirectory.getGenusLatin();
+        String speciesCn = biologicalDirectory.getSpeciesCn();
+        String speciesLatin = biologicalDirectory.getSpeciesLatin();
+        String auditor = biologicalDirectory.getAuditor();
+        String directoryVersion = biologicalDirectory.getDirectoryVersion();
+        
+        // 数据插入的sql
+        String sqlStr = "INSERT INTO biological_directory (Kingdom_cn, Kingdom_latin, Phylum_cn, Phylum_latin, Class_cn, Class_latin, Order_cn, Order_latin, Family_cn, Family_latin, Genus_cn, Genus_latin, Species_cn, Species_latin, auditor, directory_version) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        return exeUpdate(sqlStr, kingdomCn,kingdomLatin,phylumCn,phylumLatin,classCn,classLatin,orderCn,orderLatin,familyCn,familyLatin,genusCn,genusLatin,speciesCn,speciesLatin,auditor,directoryVersion);
+    }
+    
     
     // 添加学生账号
     public static boolean rigister(String name, String code, String sex, String id) throws Exception {
@@ -194,7 +228,7 @@ public class Link {
             ZhangJunMain.tips("账号不存在", stage);
             return false;
         } else {
-            ZhangJunMain.deng();
+            ZhangJunMain.normalStage();
             System.out.println("登录成功");
             return false;
         }
@@ -242,45 +276,72 @@ public class Link {
     
     //--------------------------------------------------------------------
 //   学生类初始化--管理员
-    public static void magstudent(ArrayList<Student> list) throws Exception {
-        String sql = " SELECT g.id,g.number,r.name,r.`code`,r.sex,g.chinese,g.mathematics,g.english,g.history,g.chemistry,mathematics+chemistry+history+chinese+english 'peace',t.compellation\n" +
-                "                FROM grade g,rigister r,teacher t \n" +
-                "                WHERE g.id=r.id and t.number = g.number;";
+    public static void magstudent(List<BiologicalDirectory> list) throws Exception {
+        String sqlStr = "select pk,\n" +
+                "       Kingdom_cn,\n" +
+                "       Kingdom_latin,\n" +
+                "       Phylum_cn,\n" +
+                "       Phylum_latin,\n" +
+                "       Class_cn,\n" +
+                "       Class_latin,\n" +
+                "       Order_cn,\n" +
+                "       Order_latin,\n" +
+                "       Family_cn,\n" +
+                "       Family_latin,\n" +
+                "       Genus_cn,\n" +
+                "       Genus_latin,\n" +
+                "       Species_cn,\n" +
+                "       Species_latin,\n" +
+                "       auditor,\n" +
+                "       directory_version\n" +
+                "from biological_directory where 1=1 ";
         
-        PreparedStatement pstmt = getConn().prepareStatement(sql);
+        PreparedStatement pstmt = getConn().prepareStatement(sqlStr);
         ResultSet rs = pstmt.executeQuery();
         while (rs.next()) {
-//            获取数据
-            String name = rs.getString("name");
-            String sex = rs.getString("sex");
-            String code = rs.getString("code");
-            String compellation = rs.getString("compellation");
-            int id = rs.getInt("id");
-            int number = rs.getInt("number");
-            int chinese = rs.getInt("chinese");
-            int mathematics = rs.getInt("mathematics");
-            int english = rs.getInt("english");
-            int chemistry = rs.getInt("chemistry");
-            int history = rs.getInt("history");
-            int peace = rs.getInt("peace");
-//            封装数据
-            Student student = new Student();
-            student.setId(id);
-            student.setName(name);
-            student.setCode(code);
-            student.setSex(sex);
-            student.setNumber(number);
-            student.setChinese(chinese);
-            student.setEnglish(english);
-            student.setChemistry(chemistry);
-            student.setMathematics(mathematics);
-            student.setHistory(history);
-            student.setPeace(peace);
-            student.setCompellation(compellation);
-            list.add(student);
+            // 数据映射
+            Integer pk = rs.getInt("pk");
+            String kingdomCn = rs.getString("Kingdom_cn");
+            String kingdomLatin = rs.getString("Kingdom_latin");
+            String phylumCn = rs.getString("Phylum_cn");
+            String phylumLatin = rs.getString("Phylum_latin");
+            String classCn = rs.getString("Class_cn");
+            String classLatin = rs.getString("Class_latin");
+            String orderCn = rs.getString("Order_cn");
+            String orderLatin = rs.getString("Order_latin");
+            String familyCn = rs.getString("Family_cn");
+            String familyLatin = rs.getString("Family_latin");
+            String genusCn = rs.getString("Genus_cn");
+            String genusLatin = rs.getString("Genus_latin");
+            String speciesCn = rs.getString("Species_cn");
+            String speciesLatin = rs.getString("Species_latin");
+            String auditor = rs.getString("auditor");
+            String directoryVersion = rs.getString("directory_version");
+            
+            BiologicalDirectory biologicalDirectory = new BiologicalDirectory();
+            biologicalDirectory.setPk(pk);
+            biologicalDirectory.setKingdomCn(kingdomCn);
+            biologicalDirectory.setKingdomLatin(kingdomLatin);
+            biologicalDirectory.setPhylumCn(phylumCn);
+            biologicalDirectory.setPhylumLatin(phylumLatin);
+            biologicalDirectory.setClassCn(classCn);
+            biologicalDirectory.setClassLatin(classLatin);
+            biologicalDirectory.setOrderCn(orderCn);
+            biologicalDirectory.setOrderLatin(orderLatin);
+            biologicalDirectory.setFamilyCn(familyCn);
+            biologicalDirectory.setFamilyLatin(familyLatin);
+            biologicalDirectory.setGenusCn(genusCn);
+            biologicalDirectory.setGenusLatin(genusLatin);
+            biologicalDirectory.setSpeciesCn(speciesCn);
+            biologicalDirectory.setSpeciesLatin(speciesLatin);
+            biologicalDirectory.setAuditor(auditor);
+            biologicalDirectory.setDirectoryVersion(directoryVersion);
+            
+            list.add(biologicalDirectory);
         }
 
-//        释放资源
+        
+        // 释放资源
         rs.close();
         pstmt.close();
     }

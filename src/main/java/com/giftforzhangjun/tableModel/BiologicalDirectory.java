@@ -12,20 +12,20 @@ import java.util.Objects;
 public class BiologicalDirectory {
    
     private Integer pk;
-      String KingdomCn;
-      String KingdomLatin;
-      String PhylumCn;
-      String PhylumLatin;
-      String ClassCn;
-      String ClassLatin;
-      String OrderCn;
-      String OrderLatin;
-      String FamilyCn;
-      String FamilyLatin;
-      String GenusCn;
-      String GenusLatin;
-      String SpeciesCn;
-      String SpeciesLatin;
+      String kingdomCn;
+      String kingdomLatin;
+      String phylumCn;
+      String phylumLatin;
+      String classCn;
+      String classLatin;
+      String orderCn;
+      String orderLatin;
+      String familyCn;
+      String familyLatin;
+      String genusCn;
+      String genusLatin;
+      String speciesCn;
+      String speciesLatin;
       String auditor;
       String directoryVersion;
     
@@ -35,20 +35,20 @@ public class BiologicalDirectory {
     
     public BiologicalDirectory(Integer pk, String kingdomCn, String kingdomLatin, String phylumCn, String phylumLatin, String classCn, String classLatin, String orderCn, String orderLatin, String familyCn, String familyLatin, String genusCn, String genusLatin, String speciesCn, String speciesLatin, String auditor, String directoryVersion) {
         this.pk = pk;
-        KingdomCn = kingdomCn;
-        KingdomLatin = kingdomLatin;
-        PhylumCn = phylumCn;
-        PhylumLatin = phylumLatin;
-        ClassCn = classCn;
-        ClassLatin = classLatin;
-        OrderCn = orderCn;
-        OrderLatin = orderLatin;
-        FamilyCn = familyCn;
-        FamilyLatin = familyLatin;
-        GenusCn = genusCn;
-        GenusLatin = genusLatin;
-        SpeciesCn = speciesCn;
-        SpeciesLatin = speciesLatin;
+        this.kingdomCn = kingdomCn;
+        this.kingdomLatin = kingdomLatin;
+        this.phylumCn = phylumCn;
+        this.phylumLatin = phylumLatin;
+        this.classCn = classCn;
+        this.classLatin = classLatin;
+        this.orderCn = orderCn;
+        this.orderLatin = orderLatin;
+        this.familyCn = familyCn;
+        this.familyLatin = familyLatin;
+        this.genusCn = genusCn;
+        this.genusLatin = genusLatin;
+        this.speciesCn = speciesCn;
+        this.speciesLatin = speciesLatin;
         this.auditor = auditor;
         this.directoryVersion = directoryVersion;
     }
@@ -63,115 +63,115 @@ public class BiologicalDirectory {
     }
     
     public String getKingdomCn() {
-        return KingdomCn;
+        return kingdomCn;
     }
     
     public void setKingdomCn(String kingdomCn) {
-        KingdomCn = kingdomCn;
+        this.kingdomCn = kingdomCn;
     }
     
     public String getKingdomLatin() {
-        return KingdomLatin;
+        return kingdomLatin;
     }
     
     public void setKingdomLatin(String kingdomLatin) {
-        KingdomLatin = kingdomLatin;
+        this.kingdomLatin = kingdomLatin;
     }
     
     public String getPhylumCn() {
-        return PhylumCn;
+        return phylumCn;
     }
     
     public void setPhylumCn(String phylumCn) {
-        PhylumCn = phylumCn;
+        this.phylumCn = phylumCn;
     }
     
     public String getPhylumLatin() {
-        return PhylumLatin;
+        return phylumLatin;
     }
     
     public void setPhylumLatin(String phylumLatin) {
-        PhylumLatin = phylumLatin;
+        this.phylumLatin = phylumLatin;
     }
     
     public String getClassCn() {
-        return ClassCn;
+        return classCn;
     }
     
     public void setClassCn(String classCn) {
-        ClassCn = classCn;
+        this.classCn = classCn;
     }
     
     public String getClassLatin() {
-        return ClassLatin;
+        return classLatin;
     }
     
     public void setClassLatin(String classLatin) {
-        ClassLatin = classLatin;
+        this.classLatin = classLatin;
     }
     
     public String getOrderCn() {
-        return OrderCn;
+        return orderCn;
     }
     
     public void setOrderCn(String orderCn) {
-        OrderCn = orderCn;
+        this.orderCn = orderCn;
     }
     
     public String getOrderLatin() {
-        return OrderLatin;
+        return orderLatin;
     }
     
     public void setOrderLatin(String orderLatin) {
-        OrderLatin = orderLatin;
+        this.orderLatin = orderLatin;
     }
     
     public String getFamilyCn() {
-        return FamilyCn;
+        return familyCn;
     }
     
     public void setFamilyCn(String familyCn) {
-        FamilyCn = familyCn;
+        this.familyCn = familyCn;
     }
     
     public String getFamilyLatin() {
-        return FamilyLatin;
+        return familyLatin;
     }
     
     public void setFamilyLatin(String familyLatin) {
-        FamilyLatin = familyLatin;
+        this.familyLatin = familyLatin;
     }
     
     public String getGenusCn() {
-        return GenusCn;
+        return genusCn;
     }
     
     public void setGenusCn(String genusCn) {
-        GenusCn = genusCn;
+        this.genusCn = genusCn;
     }
     
     public String getGenusLatin() {
-        return GenusLatin;
+        return genusLatin;
     }
     
     public void setGenusLatin(String genusLatin) {
-        GenusLatin = genusLatin;
+        this.genusLatin = genusLatin;
     }
     
     public String getSpeciesCn() {
-        return SpeciesCn;
+        return speciesCn;
     }
     
     public void setSpeciesCn(String speciesCn) {
-        SpeciesCn = speciesCn;
+        this.speciesCn = speciesCn;
     }
     
     public String getSpeciesLatin() {
-        return SpeciesLatin;
+        return speciesLatin;
     }
     
     public void setSpeciesLatin(String speciesLatin) {
-        SpeciesLatin = speciesLatin;
+        this.speciesLatin = speciesLatin;
     }
     
     public String getAuditor() {
@@ -196,12 +196,12 @@ public class BiologicalDirectory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BiologicalDirectory that = (BiologicalDirectory) o;
-        return Objects.equals(pk, that.pk) && Objects.equals(KingdomCn, that.KingdomCn) && Objects.equals(KingdomLatin, that.KingdomLatin) && Objects.equals(PhylumCn, that.PhylumCn) && Objects.equals(PhylumLatin, that.PhylumLatin) && Objects.equals(ClassCn, that.ClassCn) && Objects.equals(ClassLatin, that.ClassLatin) && Objects.equals(OrderCn, that.OrderCn) && Objects.equals(OrderLatin, that.OrderLatin) && Objects.equals(FamilyCn, that.FamilyCn) && Objects.equals(FamilyLatin, that.FamilyLatin) && Objects.equals(GenusCn, that.GenusCn) && Objects.equals(GenusLatin, that.GenusLatin) && Objects.equals(SpeciesCn, that.SpeciesCn) && Objects.equals(SpeciesLatin, that.SpeciesLatin) && Objects.equals(auditor, that.auditor) && Objects.equals(directoryVersion, that.directoryVersion);
+        return Objects.equals(pk, that.pk) && Objects.equals(kingdomCn, that.kingdomCn) && Objects.equals(kingdomLatin, that.kingdomLatin) && Objects.equals(phylumCn, that.phylumCn) && Objects.equals(phylumLatin, that.phylumLatin) && Objects.equals(classCn, that.classCn) && Objects.equals(classLatin, that.classLatin) && Objects.equals(orderCn, that.orderCn) && Objects.equals(orderLatin, that.orderLatin) && Objects.equals(familyCn, that.familyCn) && Objects.equals(familyLatin, that.familyLatin) && Objects.equals(genusCn, that.genusCn) && Objects.equals(genusLatin, that.genusLatin) && Objects.equals(speciesCn, that.speciesCn) && Objects.equals(speciesLatin, that.speciesLatin) && Objects.equals(auditor, that.auditor) && Objects.equals(directoryVersion, that.directoryVersion);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(pk, KingdomCn, KingdomLatin, PhylumCn, PhylumLatin, ClassCn, ClassLatin, OrderCn, OrderLatin, FamilyCn, FamilyLatin, GenusCn, GenusLatin, SpeciesCn, SpeciesLatin, auditor, directoryVersion);
+        return Objects.hash(pk, kingdomCn, kingdomLatin, phylumCn, phylumLatin, classCn, classLatin, orderCn, orderLatin, familyCn, familyLatin, genusCn, genusLatin, speciesCn, speciesLatin, auditor, directoryVersion);
     }
     
     
@@ -209,20 +209,20 @@ public class BiologicalDirectory {
     public String toString() {
         return "BiologicalDirectory{" +
                 "pk=" + pk +
-                ", KingdomCn='" + KingdomCn + '\'' +
-                ", KingdomLatin='" + KingdomLatin + '\'' +
-                ", PhylumCn='" + PhylumCn + '\'' +
-                ", PhylumLatin='" + PhylumLatin + '\'' +
-                ", ClassCn='" + ClassCn + '\'' +
-                ", ClassLatin='" + ClassLatin + '\'' +
-                ", OrderCn='" + OrderCn + '\'' +
-                ", OrderLatin='" + OrderLatin + '\'' +
-                ", FamilyCn='" + FamilyCn + '\'' +
-                ", FamilyLatin='" + FamilyLatin + '\'' +
-                ", GenusCn='" + GenusCn + '\'' +
-                ", GenusLatin='" + GenusLatin + '\'' +
-                ", SpeciesCn='" + SpeciesCn + '\'' +
-                ", SpeciesLatin='" + SpeciesLatin + '\'' +
+                ", KingdomCn='" + kingdomCn + '\'' +
+                ", KingdomLatin='" + kingdomLatin + '\'' +
+                ", PhylumCn='" + phylumCn + '\'' +
+                ", PhylumLatin='" + phylumLatin + '\'' +
+                ", ClassCn='" + classCn + '\'' +
+                ", ClassLatin='" + classLatin + '\'' +
+                ", OrderCn='" + orderCn + '\'' +
+                ", OrderLatin='" + orderLatin + '\'' +
+                ", FamilyCn='" + familyCn + '\'' +
+                ", FamilyLatin='" + familyLatin + '\'' +
+                ", GenusCn='" + genusCn + '\'' +
+                ", GenusLatin='" + genusLatin + '\'' +
+                ", SpeciesCn='" + speciesCn + '\'' +
+                ", SpeciesLatin='" + speciesLatin + '\'' +
                 ", auditor='" + auditor + '\'' +
                 ", directoryVersion='" + directoryVersion + '\'' +
                 '}';
