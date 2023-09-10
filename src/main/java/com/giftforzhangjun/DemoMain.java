@@ -1,5 +1,8 @@
 package com.giftforzhangjun;
 
+import com.giftforzhangjun.demo.BiologicalDirectoryApp;
+import com.giftforzhangjun.demo.TableViewExample;
+import com.giftforzhangjun.demo.TableViewSelectionExample;
 import javafx.application.Application;
 
 /**
@@ -10,7 +13,10 @@ import javafx.application.Application;
  * @createTime 2023年09月09日 20:02:00
  */
 public class DemoMain {
+    // public static void main(String[] args) {
+    //     Application.launch(ZhangJunMain.class);
+    // }
     public static void main(String[] args) {
-        Application.launch(ZhangJunMain.class);
+        Application.launch(TableViewExample.class);
     }
 }

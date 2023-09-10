@@ -106,7 +106,7 @@ public class ZhangJunMain extends Application {
         
         bp.setTop(vBox);
         
-        // 页面展示后进行一次默认的查询操作
+        // 页面加载后进行一次默认的全量查询操作
         List<BiologicalDirectory> biologicalDirectoryList = new ArrayList<>();
         queryFucntion(bp, biologicalDirectoryList,null);
         
