@@ -1,8 +1,6 @@
 package com.giftforzhangjun;
 
-import com.giftforzhangjun.demo.BiologicalDirectoryApp;
-import com.giftforzhangjun.demo.TableViewExample;
-import com.giftforzhangjun.demo.TableViewSelectionExample;
+import com.giftforzhangjun.demo.*;
 import javafx.application.Application;
 
 /**
@@ -17,6 +15,6 @@ public class DemoMain {
     //     Application.launch(ZhangJunMain.class);
     // }
     public static void main(String[] args) {
-        Application.launch(TableViewExample.class);
+        Application.launch(TitledPaneWithStyledToggleButtonsAndPages.class);
     }
 }

@@ -3,8 +3,11 @@ package com.giftforzhangjun.utils;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,12 +47,15 @@ public class CommonTableViewUtil {
     
     /**
      * @param t:
-     * @Description: 手动创建对象
+     * @Description: 手动创建对象（字段名默认）
      * @Author: 冲动火龙果
      * @Date: 2023/9/11 0:45
      * @return: javafx.scene.control.TableView<T>
      **/
-    public <T> TableView<T> getTableView(T t) {
+    public <T> TableView<T> getTableView(T t,List<String> fieldNameString) {
+        if (fieldNameString==null){
+            fieldNameString = new ArrayList<>();
+        }
         TableView<T> tv = new TableView();
         
         // 使用反射获取对象的类
@@ -57,10 +63,14 @@ public class CommonTableViewUtil {
         // 获取对象的所有字段
         Field[] fields = clazz.getDeclaredFields();
         // 遍历字段
-        for (Field field : fields) {
+        for (int i = 0; i < fields.length; i++) {
             // 获取字段名称
-            String fieldName = field.getName();
+            String fieldName = fields[i].getName();
             System.out.println("Field Name: " + fieldName);
+            
+            if (StringUtils.isNotBlank(fieldNameString.get(i))){
+                fieldName = fieldNameString.get(i);
+            }
             
             // 创建列对象并指定列名  默认列名为属性名
             TableColumn tableColumnSub = new TableColumn(fieldName);
@@ -72,11 +82,15 @@ public class CommonTableViewUtil {
             tv.getColumns().addAll(tableColumnSub);
         }
         
+        
+        
+
+        
         return tv;
     }
     
     /**
-     * @param T: 自动创建表对象
+     * @param T: 自动创建表对象（字段名为表名的注释）
      * @Description:
      * @Author: 冲动火龙果
      * @Date: 2023/9/11 1:17
